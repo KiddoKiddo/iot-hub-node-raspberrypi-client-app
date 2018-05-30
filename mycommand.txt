@@ -1,0 +1,35 @@
+
+Point to my IoT Hub
+sudo node index.js 'HostName=KCIoTHub001.azure-devices.net;DeviceId=SmeIoTDevice001;SharedAccessKey=5E/PxBCPSX+L4PNullflZwspIWl+7ZLSbG7qTs/Mqmw='
+
+
+Point to Humza IoT hub
+sudo node index.js 'HostName=aeiothub1.azure-devices.net;DeviceId=AE_IoTBox_001;SharedAccessKey=WLrlcJN6GjOeFvf6+Vfmxv9JvpiZfl69p1kyyQqJ5L0='
+
+
+
+listen to IoT Hub
+-----------------
+Humza iot hub:
+var connectionString = 'HostName=aeiothub1.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nwd2C2uC95yuW3veMsQmvX+Yz5qAWSWODOA6NkSvzHI=';
+
+
+My iot hub:
+var connectionString = 'HostName=KCIoTHub001.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=DHAnc6M7oP8zVHVR8mEkAbc/mf3Nxakt6neb0L0TOoo=';
+
+
+
+>>PiZeroW Ip - 172.20.10.12. (with my phone network)
+>>             192.168.0.75 (SP network)
+
+
+
+For reboot to run program
+--------------------------
+>>sudo crontab -e
+
+And at the end there added like below.
+@reboot sudo node /home/pi/iot-hub-node-raspberrypi-client-app/index.js 'HostName=KCIoTHub001.azure-devices.net;DeviceId=SmeIoTDevice001;SharedAccessKey=5E/PxBCPSX+L4PNullflZwspIWl+7ZLSbG7qTs/Mqmw='
+
+
+If you don't want , comment at the crontab

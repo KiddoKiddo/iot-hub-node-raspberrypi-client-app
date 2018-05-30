@@ -11,10 +11,16 @@
     "azure-iot-device": "1.1.7",
     "azure-iot-device-mqtt": "1.1.7",
     "bme280-sensor": "^0.1.6",
+    "node-ads1x15": "^1.0.3",
     "wiring-pi": ">=2.1.1"
   },
   "license": "MIT",
   "devDependencies": {
     "eslint": "^3.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/username/repository.git"
+  },
+  "private": true
 }

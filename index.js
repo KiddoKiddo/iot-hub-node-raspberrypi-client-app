@@ -1,5 +1,5 @@
 /*
-* IoT Hub Raspberry Pi NodeJS - Microsoft Sample Code - Copyright (c) 2017 - Licensed MIT
+*
 */
 'use strict';
 
@@ -18,25 +18,178 @@ const bi = require('az-iot-bi');
 
 const MessageProcessor = require('./messageProcessor.js');
 
-var sendingMessage = true;
+var sendingMessage = false;//true
 var messageId = 0;
 var client, config, messageProcessor;
 
+
+
+//For Code Flow control--start
+var dateTime = require('node-datetime');
+var sleep = require('sleep');
+
+var JobIDString = "YMDHMS-000";
+var BlockFlag = false;
+
+var FlagForDataSend = false;
+
+var PressureAlertFlag = false;
+var FlowAlertFlag = false;
+
+var OneTimeFlag = true;
+
+// button is attached to pin 17, led to 14
+var GPIO = require('onoff').Gpio,
+	ClientLed = new GPIO(14, 'out'),
+  DataSendLed = new GPIO(15,'out'),
+	StartSendButton = new GPIO(17, 'in', 'falling'),
+  PressureAlarmButton = new GPIO(18, 'in', 'falling'),
+  FlowAlarmButton = new GPIO(22, 'in', 'falling');
+var JobidRunningNumber = 0;
+
+
+// define the callback function
+function LightforFlag() {
+   if(FlagForDataSend){
+		 ClientLed.writeSync(0);
+	 }else{
+		 ClientLed.writeSync(1);
+	 }
+}
+
+// define the callback function
+function ReadyToSendData() {
+
+
+ if (ClientLed.readSync() === 0) { //check the pin state, if the state is 0 (or off)
+	 ClientLed.writeSync(1); //set pin state to 1 (turn LED on)
+ } else {
+	 ClientLed.writeSync(0); //set pin state to 0 (turn LED off)
+ }
+
+	setTimeout(ReadyToSendData, 500);
+
+
+}
+
+
+
+
+
+function blinkLED() {
+
+  // Light up LED for 500 ms
+  DataSendLed.writeSync(1);
+  setTimeout(function () {
+    DataSendLed.writeSync(0);
+  }, 500);
+}
+
+
+// define the callback function
+function PressureAlert() {
+
+	if(PressureAlertFlag){
+		PressureAlertFlag = false;
+	} else{
+		PressureAlertFlag = true;
+	}
+
+}
+
+// define the callback function
+function FlowAlert() {
+
+	if(FlowAlertFlag){
+		FlowAlertFlag = false;
+	} else{
+		FlowAlertFlag = true;
+	}
+
+
+}
+
+// define the callback function
+function ToggleFlagForDataSend() {
+   if(FlagForDataSend){
+		 FlagForDataSend = false;
+	 } else{
+		 FlagForDataSend = true;
+		 UpdateJobID();
+	 }
+
+	 console.log('Sending message to Trigger... ');
+	 //Change flag and trigger here again.
+	 sendMessage();//This is the key This one call back when you press***---***
+
+
+
+}
+
+// define the callback function
+function UpdateJobID() {
+	var dt1 = dateTime.create();
+	var CurrentDate = dt1.format('Ymd'); //Current Timestamp--
+	JobidRunningNumber++;
+	JobIDString = CurrentDate + "-" + JobidRunningNumber
+  //console.log('JobidRunningNumber: ' + JobidRunningNumber);
+	//console.log('JobIDString: ' + JobIDString);
+
+}
+
+// pass the callback function to the as the first argument to watch()
+StartSendButton.watch(ToggleFlagForDataSend);
+PressureAlarmButton.watch(PressureAlert);
+FlowAlarmButton.watch(FlowAlert);
+
+//For Code Flow control--stop
+
+
+
 function sendMessage() {
-  if (!sendingMessage) { return; }
+  //if (!sendingMessage) { return; }
+
+
+
+ //Send message Here
   messageId++;
-  messageProcessor.getMessage(messageId, (content, temperatureAlert) => {
+
+  messageProcessor.getMessage(messageId,JobIDString,PressureAlertFlag,FlowAlertFlag,(content, PressureAlert) => {
     var message = new Message(content);
-    message.properties.add('temperatureAlert', temperatureAlert ? 'true' : 'false');
+    message.properties.add('PressureAlert', PressureAlert ? 'true' : 'false');
     console.log('Sending message: ' + content);
     client.sendEvent(message, (err) => {
       if (err) {
         console.error('Failed to send message to Azure IoT Hub');
       } else {
         blinkLED();
+
         console.log('Message sent to Azure IoT Hub');
       }
-      setTimeout(sendMessage, config.interval);
+      //To show status of the Data send flag. Light-ON>> Data Send Flag Not set /Light-OFF>> Data Send Flag set
+      //LightforFlag();
+
+
+			if(FlagForDataSend){
+				//Send message trigger repeactively here
+				setTimeout(sendMessage, config.interval);
+			}else{
+
+
+      //To show client is ready
+      //Call only once , else call loop in the loop and ugly
+			if(OneTimeFlag){
+				ReadyToSendData();
+			}
+			OneTimeFlag= false;
+
+
+
+			}
+
+
+
+
     });
   });
 }
@@ -71,13 +224,7 @@ function receiveMessageCallback(msg) {
   });
 }
 
-function blinkLED() {
-  // Light up LED for 500 ms
-  wpi.digitalWrite(config.LEDPin, 1);
-  setTimeout(function () {
-    wpi.digitalWrite(config.LEDPin, 0);
-  }, 500);
-}
+
 
 function initClient(connectionStringParam, credentialPath) {
   var connectionString = ConnectionString.parse(connectionStringParam);
@@ -165,6 +312,14 @@ function initClient(connectionStringParam, credentialPath) {
         config.interval = twin.properties.desired.interval || config.interval;
       });
     }, config.interval);
-    sendMessage();
+
+
+
+
+      console.log('Sending message from Client(One time only)... ');
+			//Send Message
+			sendMessage();
+
+
   });
 })(process.argv[2]);
