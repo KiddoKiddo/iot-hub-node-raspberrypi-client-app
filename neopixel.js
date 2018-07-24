@@ -1,6 +1,6 @@
 'use strict';
 
-var sleep = require('sleep');
+var delay = require('delay');
 
 var strip = require("./ws2812controller/strip.js");
 var xmas = require("./ws2812controller/animations/xmas.js");
@@ -21,13 +21,14 @@ var control = require("./ws2812controller/animations/control.js");
     GoXmas1();
     GoXmasIterate();
 */
-
-rainbow.GoRainbow({}, strip);
-sleep.sleep(10);
-xmas.GoXmas1({}, strip);
-sleep.sleep(10);
-xmas.GoXmasIterate({}, strip);
-sleep.sleep(10);
-fade.GoFade2({ Color1: 'FFB341', Color2: '41FF80' });
-sleep.sleep(10);
-control.Stop();
+(async () => {
+  rainbow.GoRainbow({}, strip);
+  await delay(5000);
+  xmas.GoXmas1({}, strip);
+  await delay(5000);
+  xmas.GoXmasIterate({}, strip);
+  await delay(5000);
+  fade.GoFade2({ Color1: 'FFB341', Color2: '41FF80' });
+  await delay(5000);
+  control.Stop();
+})();

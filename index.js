@@ -33,7 +33,6 @@ var BlockFlag = false;
 
 var FlagForDataSend = false;
 
-
 var PressureAlertFlag = false;
 var FlowAlertFlag = false;
 
