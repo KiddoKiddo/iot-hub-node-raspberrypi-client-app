@@ -35,5 +35,5 @@ if(process.argv[2] == 3){
 }
 
 process.on('SIGINT', function() {
-  control.Stop();
+  control.Stop(strip);
 });
