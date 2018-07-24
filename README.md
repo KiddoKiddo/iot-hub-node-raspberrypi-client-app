@@ -4,6 +4,16 @@ This is the version for MICR demo with Neo Pixel
 
 Below is the original README.md from Azure
 
+## Neo Pixel test
+sudo node neopixel.js 0
+
+0: rainbow
+1: xmas1
+2: xmas iterate
+3: fade2
+
+## Wiring
+![](images/neopixel.JPG)
 
 # IoT Hub Raspberry Pi 3 Client application
 [![Build Status](https://travis-ci.com/Azure-Samples/iot-hub-node-raspberrypi-client-app.svg?token=5ZpmkzKtuWLEXMPjmJ6P&branch=master)](https://travis-ci.com/Azure-Samples/iot-hub-node-raspberrypi-client-app)

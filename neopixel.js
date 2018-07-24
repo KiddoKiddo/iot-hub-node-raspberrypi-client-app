@@ -15,7 +15,7 @@ var control = require("./ws2812controller/animations/control.js");
     FadeSpeed({ speed: 1-100 })
   rainbow:
     GoRainbow()
-    RainbowSpeedd({ speed: 1-100 })
+    RainbowSpeed({ speed: 1-100 })
   xmas:
     GoXmas1();
     GoXmasIterate();
