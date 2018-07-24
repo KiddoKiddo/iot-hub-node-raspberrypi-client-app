@@ -18,7 +18,7 @@ const bi = require('az-iot-bi');
 
 const MessageProcessor = require('./messageProcessor.js');
 
-var sendingMessage = false;//true
+var sendingMessage = false; //true
 var messageId = 0;
 var client, config, messageProcessor;
 
@@ -32,6 +32,7 @@ var JobIDString = "YMDHMS-000";
 var BlockFlag = false;
 
 var FlagForDataSend = false;
+
 
 var PressureAlertFlag = false;
 var FlowAlertFlag = false;
