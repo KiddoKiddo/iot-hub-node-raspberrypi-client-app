@@ -23,11 +23,11 @@ var control = require("./ws2812controller/animations/control.js");
 */
 
 rainbow.GoRainbow({}, strip);
-sleep.sleep(3);
+sleep.sleep(10);
 xmas.GoXmas1({}, strip);
-sleep.sleep(3);
+sleep.sleep(10);
 xmas.GoXmasIterate({}, strip);
-sleep.sleep(3);
+sleep.sleep(10);
 fade.GoFade2({ Color1: 'FFB341', Color2: '41FF80' });
-sleep.sleep(3);
+sleep.sleep(10);
 control.Stop();
