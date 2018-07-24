@@ -1,4 +1,4 @@
-# Version
+# IoT Box for MICR Demo
 ## Description
 This is the version for MICR demo with Neo Pixel
 
