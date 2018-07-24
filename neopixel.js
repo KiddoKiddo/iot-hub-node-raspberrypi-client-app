@@ -20,15 +20,15 @@ var control = require("./ws2812controller/animations/control.js");
     GoXmas1();
     GoXmasIterate();
 */
-rainbow.GoRainbow({}, strip);
+// rainbow.GoRainbow({}, strip);
 
 // xmas.GoXmas1({}, strip);
 
 // xmas.GoXmasIterate({}, strip);
 
-// fade.GoFade2({ Color1: 'FFB341', Color2: '41FF80' });
+fade.GoFade2({ Color1: 'FFB341', Color2: '41FF80' });
 
 
-process.on('exit', function() {
+process.on('SIGINT', function() {
   control.Stop();
 });
