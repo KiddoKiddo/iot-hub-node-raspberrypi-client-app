@@ -20,16 +20,17 @@ var control = require("./ws2812controller/animations/control.js");
     GoXmas1();
     GoXmasIterate();
 */
-if(process.argv == 0){
+console.log('MODE: ', process.argv[0]);
+if(process.argv[0] == 0){
   rainbow.GoRainbow({}, strip);
 }
-if(process.argv == 1){
+if(process.argv[0] == 1){
   xmas.GoXmas1({}, strip);
 }
-if(process.argv == 2){
+if(process.argv[0] == 2){
   xmas.GoXmasIterate({}, strip);
 }
-if(process.argv == 3){
+if(process.argv[0] == 3){
   fade.GoFade2({ Color1: 'FFB341', Color2: '41FF80' }, strip);
 }
 
