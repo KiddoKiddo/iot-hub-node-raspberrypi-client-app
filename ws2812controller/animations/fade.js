@@ -18,7 +18,7 @@ var FadeSpeed = 10;
 function fader() {
 
   this.GoFade2 = function(args, strip){
-    console.log("Starting Fade 2 Colors");
+    console.log("Starting Fade 2 Colors", args);
     Fade2Color1 = parseInt("0x" + args.Color1);
     Fade2Color2 = parseInt("0x" + args.Color2);
 
