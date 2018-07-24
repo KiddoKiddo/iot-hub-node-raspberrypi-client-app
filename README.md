@@ -2,7 +2,7 @@
 ## Description
 This is the version for MICR demo with Neo Pixel
 
-Below is the original README.md from Azures
+Below is the original README.md from Azure
 
 
 # IoT Hub Raspberry Pi 3 Client application
@@ -10,7 +10,7 @@ Below is the original README.md from Azures
 
 > This repo contains the source code to help you get familiar with Azure IoT using the Microsoft IoT Pack for Raspberry Pi 3 Starter Kit. You will find the [lesson-based tutorials on Azure.com](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-raspberry-pi-kit-node-get-started).
 
-This repo contains an arduino application that runs on Raspberry Pi 3 with a BME280 temperature&humidity sensor, and then sends these data to your IoT hub. At the same time, this application receives Cloud-to-Device message from your IoT hub, and takes actions according to the C2D command. 
+This repo contains an arduino application that runs on Raspberry Pi 3 with a BME280 temperature&humidity sensor, and then sends these data to your IoT hub. At the same time, this application receives Cloud-to-Device message from your IoT hub, and takes actions according to the C2D command.
 
 ## Set up your Pi
 ### Enable SSH on your Pi
